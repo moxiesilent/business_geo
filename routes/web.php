@@ -18,7 +18,7 @@ Route::get('/home', function () {
 });
 
 Route::get('/masyarakat', function () {
-    return view('home');
+    return view('masyarakat');
 });
 
 Route::get('/login', function () {

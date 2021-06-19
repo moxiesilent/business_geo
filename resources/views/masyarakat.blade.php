@@ -1,11 +1,12 @@
 <html lang="en">
   <head>
-    <title>Leaflet 02</title>
+    <title>Peta Persebaran Virus COVID-19</title>
     <link rel="stylesheet" href="../assets_leaflet/leaflet.css" type="text/css">
     <script src="../assets_leaflet/leaflet.js" type="text/javascript"></script>  
+    <script src="../assets_leaflet/leaflet.ajax.js" type="text/javascript"></script>
   </head>
   <body>
-    <h2>160418075 MAP</h2>
+    <h2>Peta Persebaran Virus COVID-19</h2>
     <div id="map" style="height: 90%; width: 95%; margin: auto;"></div>
     <script type="text/javascript">
 
@@ -35,26 +36,9 @@
         iconAnchor: [15, 40],
       }); 
 
-      var ubaya= L.marker([ -7.321946 ,112.768093],{icon:myIcon}).bindPopup("Universitas Surabaya");
-      var unair= L.marker([ -7.271833, 112.758296]).bindPopup("Universitas Airlangga");
-  	  var its= L.marker([-7.282437, 112.794524]).bindPopup("ITS");
+      var kabupaten = L.geoJson.ajax('../geojson/indonesia_kab.geojson').addTo(map);
 
-      var ubaya= L.marker([ -7.321946 ,112.768093] ,{icon:myIcon}).addTo(map);
-      ubaya.on('click',function(e) {
-        var pop=L.popup();
-        pop.setLatLng(e.latlng);
-        pop.setContent("<h2>Universitas Surabaya</h2><img src='https://ubaya.ac.id/images/logo.png' width='200px' > <br> <br> <a href='https://ubaya.ac.id'>website</a>");
-        map.openPopup(pop);
-      });
-
-
-      var univs = L.layerGroup([ubaya, its, unair]);
-      var overlayMaps = {"Universitas": univs };
-
-      ubaya.addTo(map);
-      unair.addTo(map);
-      its.addTo(map);
-      univs.addTo(map);
+      var overlayMaps = {"Kabupaten": kabupaten };
 
       L.control.layers(baseMaps, overlayMaps).addTo(map);
     </script>
