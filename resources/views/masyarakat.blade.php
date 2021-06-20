@@ -4,6 +4,9 @@
     <link rel="stylesheet" href="../assets_leaflet/leaflet.css" type="text/css">
     <script src="../assets_leaflet/leaflet.js" type="text/javascript"></script>  
     <script src="../assets_leaflet/leaflet.ajax.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../assets_leaflet/easy-button.css" type="text/css">
+    <script src="../assets_leaflet/easy-button.js" type="text/javascript"></script>
+
   </head>
   <body>
     <h2>Peta Persebaran Virus COVID-19</h2>
@@ -36,9 +39,22 @@
         iconAnchor: [15, 40],
       }); 
 
+      var ctEasybtn=L.easyButton(' <span>&target;</span>',
+      function() {
+        map.locate({setView : true})
+      });
+      ctEasybtn.addTo(map);
+
+      map.on('locationfound', function(e){
+        L.circle(e.latlng,{radius:e.accuracy/2}).addTo(map)
+        L.circleMarker(e.latlng).addTo(map)
+      });
+
+
       var kabupaten = L.geoJson.ajax('../geojson/indonesia_kab.geojson').addTo(map);
 
       var overlayMaps = {"Kabupaten": kabupaten };
+      
 
       L.control.layers(baseMaps, overlayMaps).addTo(map);
     </script>
